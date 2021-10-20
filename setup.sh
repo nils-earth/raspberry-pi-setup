@@ -23,8 +23,8 @@ do_ssh 0                  # Enable remote ssh login
 # System Configuration
 do_configure_keyboard us
 do_hostname ${host}
-do_change_timezone America/New_York
-do_change_locale LANG=en_US.UTF-8
+do_change_timezone Europe/Berlin
+do_change_locale LANG=en_GB.UTF-8
 
 # Don't add any raspi-config configuration options after 'END' line below & don't remove 'END' line
 END

@@ -18,7 +18,7 @@ while [[ $# -ge 1 ]]; do
     shift
 done
 
-image="ghcr.io/$username/$name:latest"
+image="$username/$name:latest"
 imageIdBefore=$(docker images --format '{{.ID}}' $image)
 
 echo "Pulling latest image - $image"
@@ -58,17 +58,16 @@ docker stop $name || true && docker rm $name || true
 echo "Creating new container and starting"
 docker run \
     --privileged \
-    -e Siren__ResetMotionAfter=15 \
-    -e Siren__CaptureDuration=10 \
-    -e Siren__WarmupInterval=75 \
-    -e Serilog__MinimumLevel=Information \
-    -e Serilog__MinimumLevel__Override__MMALSharp=Information \
-    --mount type=bind,source=/opt/vc/lib,target=/opt/vc/lib,readonly \
-    --mount type=bind,source=/opt/vc/bin,target=/opt/vc/bin,readonly \
-    -v /home/pi/motion-media:/var/lib/siren/media \
+    -e HTTP_PORT=3002 \
+    -e P2P_PORT=5002 \
+    -p 3002:3002 \
+    -p 5002:5002 \
     -d \
     --name $name \
     $image
+
+    # --mount type=bind,source=/opt/vc/lib,target=/opt/vc/lib,readonly \
+    # --mount type=bind,source=/opt/vc/bin,target=/opt/vc/bin,readonly \
 
 echo "Cleaning up old images"
 docker image prune -f
