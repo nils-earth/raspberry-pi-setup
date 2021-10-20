@@ -1,13 +1,13 @@
 #!/bin/bash
 
-name=cat-siren
-username=thnk2wn
+name=blocks
+username=nilsweber
 
 while [[ $# -ge 1 ]]; do
     i="$1"
     case $i in
         -d|--debug)
-            name=cat-siren-debug
+            name=blocks-debug
             shift
             ;;
         *)

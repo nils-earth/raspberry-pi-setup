@@ -41,9 +41,12 @@ sudo passwd pi
 echo "Updating packages"
 sudo apt-get update && sudo apt-get -y upgrade
 
+echo "Installing git"
+sudo apt-get install git
+
 # rasp-config non-interactive do_camera didn't seem to work
-echo "Enabling camera"
-sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
+# echo "Enabling camera"
+# sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
 
 echo "Moving pull script from boot to home"
 mv /boot/pull.sh /home/pi

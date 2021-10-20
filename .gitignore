@@ -266,4 +266,4 @@ __pycache__/
 */appSettings.local.json
 .DS_Store
 
-pi-setup/downloads/
+downloads/
