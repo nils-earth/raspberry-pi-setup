@@ -4,12 +4,17 @@
 
 # Final host name (not initial login)
 host_name=""
+wifi_pwd=""
 
 while [[ $# -ge 1 ]]; do
     i="$1"
     case $i in
         -h|--host)
             host_name=$2
+            shift
+            ;;
+        -w|--wifi)
+            wifi_pwd=$2
             shift
             ;;
         *)
@@ -65,6 +70,7 @@ if [ ! -f $image_zip ]; then
   echo "Downloading latest Raspbian lite image"
   # curl often gave "error 18 - transfer closed with outstanding read data remaining"
   wget -O $image_zip "https://downloads.raspberrypi.org/raspbian_lite_latest"
+  wget -O $image_zip "https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/2021-05-07-raspios-buster-armhf-lite.zip"
 
   if [ $? -ne 0 ]; then
     echo "Download failed" ; exit -1;
@@ -126,13 +132,15 @@ echo "Configuring Wi-Fi"
 wifi_ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F: '/ SSID/{print $2}')
 wifi_ssid=`echo $wifi_ssid | sed 's/^ *//g'` # trim
 
-echo "Wi-Fi password for ${wifi_ssid}:"
-read -s wifi_pwd
+if [ -z $wifi_pwd ]; then
+  echo "Wi-Fi password for ${wifi_ssid}:"
+  read -s wifi_pwd
+fi
 
 cat >"$volume"/wpa_supplicant.conf <<EOL
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
-country=US
+country=DE
 
 network={
 	ssid="${wifi_ssid}"
