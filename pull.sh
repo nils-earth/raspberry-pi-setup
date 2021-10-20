@@ -2,6 +2,8 @@
 
 name=blocks
 username=nilsweber
+http_port=3002
+p2p_port=5002
 
 while [[ $# -ge 1 ]]; do
     i="$1"
@@ -55,13 +57,16 @@ docker stop $name || true && docker rm $name || true
 # http://www.bnikolic.co.uk/blog/linux-ld-debug.html
 # Debug dependencies example: ldd /opt/vs/lib/libmmal.so
 
+echo "Starting ngrok on port" ${p2p_port}
+./ngrok http ${p2p_port}
+
 echo "Creating new container and starting"
 docker run \
     --privileged \
-    -e HTTP_PORT=3002 \
-    -e P2P_PORT=5002 \
-    -p 3002:3002 \
-    -p 5002:5002 \
+    -e HTTP_PORT=${http_port} \
+    -e P2P_PORT=${p2p_port} \
+    -p ${http_port}:${http_port} \
+    -p ${p2p_port}:${p2p_port} \
     -d \
     --name $name \
     $image
