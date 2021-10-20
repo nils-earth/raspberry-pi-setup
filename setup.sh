@@ -51,6 +51,11 @@ sudo apt-get install git
 echo "Moving pull script from boot to home"
 mv /boot/pull.sh /home/pi
 
+echo "Installing Ngrok"
+wget -O ngrok.zip "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip"
+unzip ngrok.zip
+rm ngrok.zip
+
 echo "Installing Docker"
 # Installing docker will disconnect ssh
 curl -sSL https://get.docker.com | sh
