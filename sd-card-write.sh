@@ -69,7 +69,7 @@ if [ ! -f $image_zip ]; then
   mkdir -p ./downloads
   echo "Downloading latest Raspbian lite image"
   # curl often gave "error 18 - transfer closed with outstanding read data remaining"
-  wget -O $image_zip "https://downloads.raspberrypi.org/raspbian_lite_latest"
+  # wget -O $image_zip "https://downloads.raspberrypi.org/raspbian_lite_latest"
   wget -O $image_zip "https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/2021-05-07-raspios-buster-armhf-lite.zip"
 
   if [ $? -ne 0 ]; then
